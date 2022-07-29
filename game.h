@@ -18,7 +18,4 @@ class Game{
     void Run();
 };
 
-int main(){
-    Game game;
-    game.Run();
-}
+

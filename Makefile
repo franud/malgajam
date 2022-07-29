@@ -1,8 +1,8 @@
-OBJS = game.cpp settings.cpp player.cpp
+OBJS = main.cpp game.cpp settings.cpp player.cpp
 
 CC = g++
 
-COMPILER_FLAGS = -w
+COMPILER_FLAGS = -w -g
 
 LINKER_FLAGS = -lraylib
 
