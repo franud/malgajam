@@ -3,6 +3,7 @@
 
 class Player{
     private:
+	bool isGrounded;
     Rectangle rect;
     Vector2 movement{};
     int vel;
