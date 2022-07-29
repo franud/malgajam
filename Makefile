@@ -13,3 +13,6 @@ all : $(OBJS)
 
 run: $(OBJ_NAME)
 	./$(OBJ_NAME)
+
+clean:
+	rm bin 

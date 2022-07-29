@@ -26,8 +26,8 @@ void Game::Update(){
 }
 
 void Game::Render(){
-BeginDrawing();
-    ClearBackground(BLACK);
-    player.Draw();
-EndDrawing();
+    BeginDrawing();
+	ClearBackground(BLACK);
+	player.Draw();
+    EndDrawing();
 }
