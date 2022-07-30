@@ -15,11 +15,6 @@ Player::Player(){
     frame = 0;
 }
 
-void Player::LoadText(){
-    TextureHolder *textureHolder = TextureHolder::getInstance();
-    texture = textureHolder->getTexture(0);
-}
-
 Player::~Player(){
     /* UnloadTexture(texture); */
 }
@@ -73,7 +68,7 @@ void Player::Draw(){
             if(frame > 3){
                 frame = 0;
             }
-            DrawTextureRec(texture, Rectangle{sourceRect.x, 0, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
+            DrawTextureRec(textureHolder->getTexture(0), Rectangle{sourceRect.x, 0, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
         }break;
         case PlayerStates::Run:
         {
@@ -81,7 +76,7 @@ void Player::Draw(){
             if(frame > 2){
                 frame = 0;
             }
-            DrawTextureRec(texture, Rectangle{sourceRect.x, 128, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
+            DrawTextureRec(textureHolder->getTexture(0), Rectangle{sourceRect.x, 128, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
         }break;
         default:
         break;

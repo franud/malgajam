@@ -4,7 +4,6 @@ Level::Level(){
 }
 
 void Level::loadLevel(){
-    player.LoadText();
     std::ifstream file("tilemap.csv");
 
     CSVRow row;

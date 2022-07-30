@@ -25,16 +25,14 @@ private:
     int vel;
 
     // Draw
+    TextureHolder *textureHolder = TextureHolder::getInstance();
 
-    Texture2D texture;
     float frame;
 
     void Move();
 
 public:
     Player();
-
-    void LoadText();
 
     ~Player();
 
