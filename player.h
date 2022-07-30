@@ -10,17 +10,12 @@ enum class PlayerStates {
 };
 
 class Player{
-    private:
+private:
 	bool isGrounded;
 	PlayerStates status;
     Rectangle rect;
 
 	/* movement related stuff */
-	bool FacingRight;
-	float RunSpeed;
-	float jumpAcceleration;
-	float jumpVelocityDampen;
-	int runDir;
     Vector2 movement{};
     int vel;
 
@@ -28,7 +23,7 @@ class Player{
 
     void Move();
 
-    public:
+public:
     Player();
 
     ~Player();

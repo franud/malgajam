@@ -10,11 +10,6 @@ Player::Player(){
     rect = Rectangle{1, 1, 16, 16};
 
 	/* movement related stuff */
-	FacingRight = true;
-	RunSpeed = 200;
-    jumpAcceleration = -350;
-    jumpVelocityDampen = 1.125f;
-	runDir = 0;
     movement = Vector2{0, 0};
     vel = 200;
     /* texture = LoadTexture("resources/player.png"); */
@@ -27,28 +22,19 @@ Player::~Player(){
 void Player::HandleInput(){
 	if (IsKeyPressed(KEY_UP)) {
 		if (isGrounded) {
+			movement.y = -3;
 			isGrounded = false;
-			movement.y -= 3;
 		}
 	}
 
     if(IsKeyPressed(KEY_RIGHT)){
-		runDir = 1;
         movement.x += 1;
 	}else if (IsKeyReleased(KEY_RIGHT)){
-		runDir = 0;
         movement.x -= 1;
-    }
-    if(IsKeyPressed(KEY_DOWN)){
-        movement.y += 1;
-    }else if (IsKeyReleased(KEY_DOWN)){
-        movement.y -= 1;
     }
     if(IsKeyPressed(KEY_LEFT)){
-		runDir = -1;
         movement.x -= 1;
     }else if (IsKeyReleased(KEY_LEFT)){
-		runDir = 0;
         movement.x += 1;
     }
 }
@@ -70,6 +56,6 @@ void Player::Move(){
 		rect.y = SCREENHEIGHT - rect.height;
 	}
 	if (!isGrounded) {
-		movement.y += 0.1;
+		movement.y += 0.2;
 	}
 }
