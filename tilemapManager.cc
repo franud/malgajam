@@ -4,28 +4,7 @@
 
 #include "settings.h"
 #include "csvParser.cc"
-
-class Tile{
-private:
-    Rectangle rect;
-    Texture2D texture;
-
-public:
-    Tile(Rectangle rect);
-
-    void draw();
-};
-
-Tile::Tile(Rectangle rect){
-    this->rect = rect;
-    //Implementar textura
-}
-
-void Tile::draw(){
-    /* DrawTexture(texture, rect.x, rect.y, WHITE); */
-    DrawRectangle(rect.x, rect.y, rect.width, rect.height, WHITE);
-    /* printf("\nDrawing"); */
-}
+#include "tile.hh"
 
 class Level{
 private:
@@ -43,9 +22,9 @@ Level::Level(){
 }
 
 void Level::LoadLevel(){
-    std::ifstream       file("tilemap.csv");
+    std::ifstream file("tilemap.csv");
 
-    CSVRow              row;
+    CSVRow row;
     int i = 0;
     int j = 0;
 

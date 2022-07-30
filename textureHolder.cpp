@@ -13,14 +13,14 @@ TextureHolder* TextureHolder::getInstance() {
 void TextureHolder::addTexture(int id, const std::string& path) {
     Image image = LoadImage(path.c_str());
     Texture2D texture = LoadTextureFromImage(image);
-    idToTexture.insert(std::make_pair(id, &texture));
+    idToTexture.insert(std::make_pair(id, texture));
     UnloadImage(image);
 }
 
-Texture2D* TextureHolder::getTexture (int id) {
-    if (this->idToTexture.find(id) == idToTexture.end()) {
-        printf ("ESA TEXTURA CON ID %i NO EXISTE\n", id);
-        exit(999);
-    }
-    return this->idToTexture[id];
+Texture2D TextureHolder::getTexture (int id) {
+    return idToTexture[id];
+}
+
+void TextureHolder::loadTextures(){
+    addTexture(0, "resources/spriteSheet.png");
 }

@@ -1,8 +1,6 @@
 #include "game.h"
 
 Game::Game(){
-    InitWindow(SCREENWIDTH, SCREENHEIGHT, "Zelda Like");
-    SetTargetFPS(FPS);
 }
 
 Game::~Game(){
@@ -10,6 +8,15 @@ Game::~Game(){
 }
 
 void Game::Run(){
+    InitWindow(SCREENWIDTH, SCREENHEIGHT, "Zelda Like");
+
+    SetTargetFPS(FPS);
+    
+    TextureHolder *textureHolder = TextureHolder::getInstance();
+    textureHolder->loadTextures();
+
+    level.loadLevel();
+
     while(!WindowShouldClose()){
         ProcessEvents();
         Update();
@@ -18,16 +25,16 @@ void Game::Run(){
 }
 
 void Game::ProcessEvents(){
-    player.HandleInput();
+    level.processEvents();
 }
 
 void Game::Update(){
-    player.Update();
+    level.update();
 }
 
 void Game::Render(){
     BeginDrawing();
-	ClearBackground(BLACK);
-	player.Draw();
+	ClearBackground(WHITE);
+    level.draw();
     EndDrawing();
 }

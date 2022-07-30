@@ -1,10 +1,14 @@
 #include <raylib.h>
+#include <raymath.h>
+
 #include "settings.h"
-#include "player.h"
+#include "level.hh"
+#include "textureHolder.h"
 
 class Game{
     private:
-    Player player;
+    /* Player player; */
+    Level level;
 
     void ProcessEvents();
     void Update();
