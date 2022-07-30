@@ -5,6 +5,7 @@
 Player::Player(){
 	state = PlayerStates::Idle;	
 	isGrounded = false;
+	doubleJump = false;
     rect = Rectangle{0, 0, 32, 32};
     sourceRect = Rectangle{0, 0, rect.width, rect.height};
 
@@ -63,6 +64,9 @@ void Player::HandleInput(){
 		if (isGrounded) {
 			movement.y = -3;
 			isGrounded = false;
+        } else if (doubleJump) {
+			movement.y = -3;
+			doubleJump = false;
         } 
 	}
 
@@ -80,10 +84,11 @@ void Player::HandleInput(){
 
 void Player::Update(){
     Move();  
-
     if(!isGrounded){
         movement.y += 0.2;
-    }
+    } else {
+		doubleJump = true;
+	}
 }
 
 void Player::Draw(){
