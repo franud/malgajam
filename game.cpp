@@ -1,7 +1,7 @@
 #include "game.h"
 
 Game::Game(){
-    InitWindow(SCREENWIDTH, SCREENWIDTH, "Zelda Like");
+    InitWindow(SCREENWIDTH, SCREENHEIGHT, "Zelda Like");
     SetTargetFPS(FPS);
 }
 
