@@ -3,7 +3,7 @@
 Game::Game() {
     InitWindow(SCREENWIDTH, SCREENHEIGHT, "Zelda Like");
     SetTargetFPS(FPS);
-    this->dialog = Dialog("Gabi", "Hola que tal :D\nPrueba de salto de linea");
+    this->dialog = Dialog("Gabi", "Hola que tal :D\nPrueba de salto de linea\nA ver cuantas caben yo creo que 4\nVamos a ver si es verdad");
 }
 
 Game::~Game(){
