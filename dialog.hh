@@ -8,6 +8,8 @@ private:
     std::string whoIsTalkingText;
     Rectangle whoIsTalkingRectangle;
     Rectangle outter;
+    float espacioEntreLineas;
+
 public:
     Dialog(const std::string& whoIsTalking, const std::string& dialogText);
     Dialog();
