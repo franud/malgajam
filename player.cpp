@@ -5,8 +5,16 @@
 #include <raymath.h>
 
 Player::Player(){
+	status = PlayerStates::Idle;	
 	isGrounded = false;
     rect = Rectangle{1, 1, 16, 16};
+
+	/* movement related stuff */
+	FacingRight = true;
+	RunSpeed = 200;
+    jumpAcceleration = -350;
+    jumpVelocityDampen = 1.125f;
+	runDir = 0;
     movement = Vector2{0, 0};
     vel = 200;
     /* texture = LoadTexture("resources/player.png"); */
@@ -17,14 +25,18 @@ Player::~Player(){
 }
 
 void Player::HandleInput(){
-    if(IsKeyPressed(KEY_UP)){
-        movement.y -= 1;
-    }else if (IsKeyReleased(KEY_UP)){
-        movement.y += 1;
-    }
+	if (IsKeyPressed(KEY_UP)) {
+		if (isGrounded) {
+			isGrounded = false;
+			movement.y -= 3;
+		}
+	}
+
     if(IsKeyPressed(KEY_RIGHT)){
+		runDir = 1;
         movement.x += 1;
 	}else if (IsKeyReleased(KEY_RIGHT)){
+		runDir = 0;
         movement.x -= 1;
     }
     if(IsKeyPressed(KEY_DOWN)){
@@ -33,8 +45,10 @@ void Player::HandleInput(){
         movement.y -= 1;
     }
     if(IsKeyPressed(KEY_LEFT)){
+		runDir = -1;
         movement.x -= 1;
     }else if (IsKeyReleased(KEY_LEFT)){
+		runDir = 0;
         movement.x += 1;
     }
 }
@@ -48,23 +62,14 @@ void Player::Draw(){
 }
 
 void Player::Move(){
-	isGrounded = (rect.y + rect.height == SCREENHEIGHT);
 	rect.x += movement.x * vel * GetFrameTime();
     rect.y += movement.y * vel * GetFrameTime();
 
-	if (rect.x < 0) {
-		rect.x = 0;
-	}
-	if (rect.x + rect.width > SCREENWIDTH) {
-		rect.x = SCREENWIDTH - rect.width;
-	}
-	if (rect.y < 0) {
-		rect.y = 0;
-	}
 	if (rect.y + rect.height > SCREENHEIGHT) {
+		isGrounded = true;
 		rect.y = SCREENHEIGHT - rect.height;
 	}
 	if (!isGrounded) {
-		rect.y += 1;
+		movement.y += 0.1;
 	}
 }
