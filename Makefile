@@ -1,4 +1,4 @@
-OBJS = main.cpp game.cpp settings.cpp player.cpp
+OBJS = main.cpp game.cpp settings.cpp player.cpp dialog.cpp
 
 CC = g++
 

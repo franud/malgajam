@@ -1,6 +1,6 @@
-#include "settings.h"
+#include "settings.hh"
 
-const int SCREENWIDTH = 720;
-const int SCREENHEIGHT = 480;
+const int SCREENWIDTH = 1920;
+const int SCREENHEIGHT = 1080;
 
 const int FPS = 60;

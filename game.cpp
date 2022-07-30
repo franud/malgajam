@@ -1,8 +1,9 @@
-#include "game.h"
+#include "game.hh"
 
-Game::Game(){
-    InitWindow(SCREENWIDTH, SCREENWIDTH, "Zelda Like");
+Game::Game() {
+    InitWindow(SCREENWIDTH, SCREENHEIGHT, "Zelda Like");
     SetTargetFPS(FPS);
+    this->dialog = Dialog("Gabi", "Hola");
 }
 
 Game::~Game(){
@@ -29,5 +30,6 @@ void Game::Render(){
     BeginDrawing();
 	ClearBackground(BLACK);
 	player.Draw();
+    this->dialog.render();
     EndDrawing();
 }

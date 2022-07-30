@@ -1,10 +1,12 @@
 #include <raylib.h>
-#include "settings.h"
-#include "player.h"
+#include "settings.hh"
+#include "player.hh"
+#include "dialog.hh"
 
 class Game{
     private:
     Player player;
+    Dialog dialog;
 
     void ProcessEvents();
     void Update();
