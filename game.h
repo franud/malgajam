@@ -7,7 +7,6 @@
 
 class Game{
     private:
-    /* Player player; */
     Level level;
 
     void ProcessEvents();

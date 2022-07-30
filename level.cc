@@ -36,6 +36,8 @@ void Level::processEvents(){
 
 void Level::update(){
     player.Update();
+    camera.offset.x -= 0;
+    SetWindowPosition(-camera.offset.x, 0);
 }
 
 void Level::draw(){
@@ -43,4 +45,8 @@ void Level::draw(){
         tile.draw();
     }
     player.Draw();
+}
+
+Camera2D Level::getCamera(){
+    return camera;
 }

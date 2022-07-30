@@ -1,10 +1,11 @@
 #include "player.h"
 #include "textureHolder.h"
+#include <raylib.h>
 
 Player::Player(){
 	state = PlayerStates::Idle;	
 	isGrounded = false;
-    rect = Rectangle{0, 0, 48, 48};
+    rect = Rectangle{0, 0, 32, 32};
     sourceRect = Rectangle{0, 0, rect.width, rect.height};
 
 	/* movement related stuff */
@@ -31,12 +32,12 @@ void Player::setScenario(std::vector<Tile> s){
 void Player::horizontalCollition () {
 	for (Tile t : scenario) {
 		if (CheckCollisionRecs(rect, t.getRect())) {
-			if (movement.x < 0) {
+            if (movement.x < 0) {
 				rect.x = t.getRect().x + t.getRect().width;
 			}		
 			if (movement.x > 0) {
 				rect.x = t.getRect().x - rect.width;
-			}		
+            }
 		}
 	}
 }
@@ -62,7 +63,7 @@ void Player::HandleInput(){
 		if (isGrounded) {
 			movement.y = -3;
 			isGrounded = false;
-		}
+        } 
 	}
 
     if(IsKeyPressed(KEY_RIGHT)){
@@ -78,7 +79,7 @@ void Player::HandleInput(){
 }
 
 void Player::Update(){
-    Move();
+    Move();  
 
     if(!isGrounded){
         movement.y += 0.2;
@@ -118,13 +119,24 @@ void Player::Draw(){
 }
 
 void Player::Move(){
+    isGrounded=false;
 	rect.x += movement.x * vel * GetFrameTime();
 	horizontalCollition();
     rect.y += movement.y * vel * GetFrameTime();
 	verticalCollition();
 
-	if (rect.y + rect.height >= SCREENHEIGHT) {
-		isGrounded = true;
-		rect.y = SCREENHEIGHT - rect.height;
-	}
+	/* if (rect.y + rect.height >= SCREENHEIGHT) { */
+	/* 	isGrounded = true; */
+	/* } */
+
+    if(rect.y+rect.height >= TILESIZE * 10 
+            || rect.y < 0
+            || rect.x < 0
+            || rect.x + rect.width >= TILESIZE * 10){
+        printf("pum. muerto owo \n");
+    }
+}
+
+Rectangle Player::getRect(){
+    return rect;
 }

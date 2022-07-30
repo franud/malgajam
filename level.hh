@@ -11,6 +11,7 @@ class Level{
 private:
     std::vector<Tile> tiles;
     Player player;
+    Camera2D camera{Vector2{0,0}, Vector2{0,0}, 0, 1.0f};
 
 public:
     Level();
@@ -22,4 +23,6 @@ public:
     void update();
 
     void draw();
+
+    Camera2D getCamera();
 };

@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include <raylib.h>
 #include <raymath.h>
 #include <cmath>
@@ -52,4 +55,7 @@ public:
     void Update();
 
     void Draw();
+
+    Rectangle getRect();
 };
+#endif

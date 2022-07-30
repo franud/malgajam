@@ -1,4 +1,5 @@
 #include "game.h"
+#include <raylib.h>
 
 Game::Game(){
 }
@@ -33,8 +34,10 @@ void Game::Update(){
 }
 
 void Game::Render(){
-    BeginDrawing();
+BeginDrawing();
+BeginMode2D(level.getCamera());
 	ClearBackground(WHITE);
     level.draw();
-    EndDrawing();
+EndMode2D();
+EndDrawing();
 }
