@@ -1,9 +1,11 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <cmath>
+#include <vector>
 
 #include "settings.h"
 #include "textureHolder.h"
+#include "tile.hh"
 
 enum class PlayerStates {
 	Idle,
@@ -19,6 +21,7 @@ private:
 	PlayerStates state;
     Rectangle rect;
     Rectangle sourceRect;
+    std::vector<Tile> scenario;
 
 	/* movement related stuff */
     Vector2 movement{};
@@ -36,7 +39,15 @@ public:
 
     ~Player();
 
+    void setPosition(float x , float y);
+
     void HandleInput();
+
+    void setScenario(std::vector<Tile> s);
+
+    void horizontalCollition();
+    
+    void verticalCollition();
 
     void Update();
 

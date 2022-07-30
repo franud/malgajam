@@ -8,7 +8,7 @@ Game::~Game(){
 }
 
 void Game::Run(){
-    InitWindow(SCREENWIDTH, SCREENHEIGHT, "Zelda Like");
+    InitWindow(TILESIZE * 10, TILESIZE * 10, "Zelda Like");
 
     SetTargetFPS(FPS);
     

@@ -20,9 +20,14 @@ void Level::loadLevel(){
                 
                 tiles.push_back(tile);
             }
+            if(row[j] == "1"){
+                player.setPosition(j * TILESIZE, i * TILESIZE); 
+            }
         }
         i++;
     }
+
+    player.setScenario(tiles);
 }
 
 void Level::processEvents(){

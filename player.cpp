@@ -4,7 +4,7 @@
 Player::Player(){
 	state = PlayerStates::Idle;	
 	isGrounded = false;
-    rect = Rectangle{0, 0, 128, 128};
+    rect = Rectangle{0, 0, 48, 48};
     sourceRect = Rectangle{0, 0, rect.width, rect.height};
 
 	/* movement related stuff */
@@ -19,6 +19,44 @@ Player::~Player(){
     /* UnloadTexture(texture); */
 }
 
+void Player::setPosition(float x , float y){
+    rect.x = x;
+    rect.y = y;
+}
+
+void Player::setScenario(std::vector<Tile> s){
+    scenario = s;
+}
+
+void Player::horizontalCollition () {
+	for (Tile t : scenario) {
+		if (CheckCollisionRecs(rect, t.getRect())) {
+			if (movement.x < 0) {
+				rect.x = t.getRect().x + t.getRect().width;
+			}		
+			if (movement.x > 0) {
+				rect.x = t.getRect().x - rect.width;
+			}		
+		}
+	}
+}
+
+void Player::verticalCollition () {
+	for (Tile t : scenario) {
+		if (CheckCollisionRecs(this->rect, t.getRect())) {
+			if (movement.y < 0) {
+				movement.y = 0;
+				rect.y = t.getRect().y + t.getRect().height;
+			}
+			if (movement.y > 0) {
+				isGrounded = true; // is grounded in top of the tile
+				rect.y = t.getRect().y - this->rect.height;
+			}
+		}
+	}
+
+}
+
 void Player::HandleInput(){
 	if (IsKeyPressed(KEY_UP)) {
 		if (isGrounded) {
@@ -28,27 +66,23 @@ void Player::HandleInput(){
 	}
 
     if(IsKeyPressed(KEY_RIGHT)){
-        frame = 0;
         movement.x += 1;
 	}else if (IsKeyReleased(KEY_RIGHT)){
         movement.x -= 1;
     }
     if(IsKeyPressed(KEY_LEFT)){
-        frame = 0;
         movement.x -= 1;
     }else if (IsKeyReleased(KEY_LEFT)){
         movement.x += 1;
-    }
-
-    if(movement.x != 0){
-        state = PlayerStates::Run;
-    }else{
-        state = PlayerStates::Idle;
     }
 }
 
 void Player::Update(){
     Move();
+
+    if(!isGrounded){
+        movement.y += 0.2;
+    }
 }
 
 void Player::Draw(){
@@ -68,7 +102,7 @@ void Player::Draw(){
             if(frame > 3){
                 frame = 0;
             }
-            DrawTextureRec(textureHolder->getTexture(0), Rectangle{sourceRect.x, 0, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
+            DrawTextureRec(textureHolder->getTexture(1), Rectangle{sourceRect.x, 0, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
         }break;
         case PlayerStates::Run:
         {
@@ -76,7 +110,7 @@ void Player::Draw(){
             if(frame > 2){
                 frame = 0;
             }
-            DrawTextureRec(textureHolder->getTexture(0), Rectangle{sourceRect.x, 128, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
+            DrawTextureRec(textureHolder->getTexture(1), Rectangle{sourceRect.x, 128, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
         }break;
         default:
         break;
@@ -85,13 +119,12 @@ void Player::Draw(){
 
 void Player::Move(){
 	rect.x += movement.x * vel * GetFrameTime();
+	horizontalCollition();
     rect.y += movement.y * vel * GetFrameTime();
+	verticalCollition();
 
-	if (rect.y + rect.height > SCREENHEIGHT) {
+	if (rect.y + rect.height >= SCREENHEIGHT) {
 		isGrounded = true;
 		rect.y = SCREENHEIGHT - rect.height;
-	}
-	if (!isGrounded) {
-		movement.y += 0.2;
 	}
 }

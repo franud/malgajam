@@ -23,4 +23,6 @@ Texture2D TextureHolder::getTexture (int id) {
 
 void TextureHolder::loadTextures(){
     addTexture(0, "resources/spriteSheet.png");
+    addTexture(1, "resources/player.png");
+    addTexture(2, "resources/tile.png");
 }
