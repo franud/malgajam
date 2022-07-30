@@ -1,12 +1,26 @@
 #include "textureHolder.h"
-#include <memory>
-#include <utility>
 
-void TextureHolder::load(Textures::ID id, const std::string& filename){
+// Define the static TextureHolder pointer
+TextureHolder* TextureHolder::inst_ = NULL;
 
-    std::unique_ptr<Texture2D> texture (new Texture2D());
+TextureHolder* TextureHolder::getInstance() {
+   if (inst_ == NULL) {
+      inst_ = new TextureHolder();
+   }
+   return(inst_);
+}
 
-    texture->LoadTexture(filename.c_str());
+void TextureHolder::addTexture(int id, const std::string& path) {
+    Image image = LoadImage(path.c_str());
+    Texture2D texture = LoadTextureFromImage(image);
+    idToTexture.insert(std::make_pair(id, &texture));
+    UnloadImage(image);
+}
 
-    textureMap.insert(std::make_pair(id, std::move(texture)));
+Texture2D* TextureHolder::getTexture (int id) {
+    if (this->idToTexture.find(id) == idToTexture.end()) {
+        printf ("ESA TEXTURA CON ID %i NO EXISTE\n", id);
+        exit(999);
+    }
+    return this->idToTexture[id];
 }

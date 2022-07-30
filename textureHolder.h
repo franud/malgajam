@@ -1,16 +1,20 @@
 #include <raylib.h>
 #include <map>
-#include <memory>
 #include <string>
 
-namespace Textures{
-    enum ID {Landscape, Player, Bullet};
-}
+class TextureHolder {
+public:
+   // This is how clients can access the single instance
+   static TextureHolder* getInstance();
+   void addTexture (int id, const std::string& path);
+   Texture2D* getTexture (int id);
+   
+protected:
+   std::map<int, Texture2D*> idToTexture;
 
-class TextureHolder{
-    private:
-    std::map<Textures::ID, std::unique_ptr<Texture2D>> textureMap;
-    
-    public:
-    void load(Textures::ID id, const std::string& filename);
+private:
+   static TextureHolder* inst_;   // The one, single instance
+   TextureHolder() {} // private constructor
+   TextureHolder(const TextureHolder&);
+   TextureHolder& operator=(const TextureHolder&);
 };
