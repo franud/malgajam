@@ -35,9 +35,13 @@ void Player::horizontalCollition () {
 		if (CheckCollisionRecs(rect, t.getRect())) {
             if (movement.x < 0) {
 				rect.x = t.getRect().x + t.getRect().width;
+                movement.y = 0;
+                isGrounded = true;
 			}		
 			if (movement.x > 0) {
 				rect.x = t.getRect().x - rect.width;
+                movement.y = 0;
+                isGrounded = true;
             }
 		}
 	}
@@ -56,7 +60,6 @@ void Player::verticalCollition () {
 			}
 		}
 	}
-
 }
 
 void Player::HandleInput(){
