@@ -3,10 +3,16 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "tilemapLevel0.tsx",
     "expandedProjectPaths": [
+        "."
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "tilemapLevel0.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
     },
     "last.exportedFilePath": "/home/junk/code/cpp/raylib/malgajam/resources/maps/level0",
     "last.imagePath": "/home/junk/code/cpp/raylib/malgajam/resources/maps/level0",
@@ -14,9 +20,11 @@
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.width": 60,
     "openFiles": [
+        "tilemapLevel0.tsx"
     ],
     "project": "level0.tiled-project",
     "recentFiles": [
+        "tilemapLevel0.tsx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

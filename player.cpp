@@ -7,15 +7,18 @@ Player::Player(){
 	isGrounded = false;
     isWalled = false;
 	doubleJump = false;
-    rect = Rectangle{0, 0, 96, 96};
-    sourceRect = Rectangle{0, 0, rect.width, rect.height};
+    rect = Rectangle{96, 96, 48, 48};
+    sourceRect = Rectangle{0, 0, 48, 48};
 
 	/* movement related stuff */
     movement = Vector2{0, 0};
     vel = 200;
 
+    levelStartPos = Vector2{0,0};
+
     // Draw
     frame = 0;
+    freezeFrames = 10;
 }
 
 Player::~Player(){
@@ -25,6 +28,12 @@ Player::~Player(){
 void Player::setPosition(float x , float y){
     rect.x = x;
     rect.y = y;
+    if(isFirst){
+        levelStartPos = Vector2{x, y};
+        isFirst = false;
+        deadCheck = true;
+    }
+    state = PlayerStates::Idle;
 }
 
 void Player::setScenario(std::vector<Tile> s){
@@ -64,40 +73,61 @@ void Player::verticalCollition () {
 }
 
 void Player::HandleInput(){
-	if (IsKeyPressed(KEY_UP)) {
-		if (isGrounded) {
-			movement.y = -3;
-			isGrounded = false;
-            isWalled = false;
-        } else if (doubleJump) {
-			movement.y = -3;
-			doubleJump = false;
-            isWalled = false;
-        } else if (isWalled) {
-            movement.y = -3;
-            isWalled = false;
+    switch(state){
+        case PlayerStates::Dead:
+        {
+        }break;
+        default:
+        {
+            if (IsKeyPressed(KEY_UP)) {
+                if (isGrounded) {
+                    movement.y = -3;
+                    isGrounded = false;
+                    isWalled = false;
+                } else if (doubleJump) {
+                    movement.y = -3;
+                    doubleJump = false;
+                    isWalled = false;
+                } else if (isWalled) {
+                    movement.y = -3;
+                    isWalled = false;
+                }
+            }
+            if(IsKeyPressed(KEY_RIGHT)){
+                movement.x += 1;
+            } else if (IsKeyReleased(KEY_RIGHT)){
+                movement.x -= 1;
+            }
+            if(IsKeyPressed(KEY_LEFT)){
+                movement.x -= 1;
+            }else if (IsKeyReleased(KEY_LEFT)){
+                movement.x += 1;
+            }
         }
-	}
-
-    if(IsKeyPressed(KEY_RIGHT)){
-        movement.x += 1;
-	} else if (IsKeyReleased(KEY_RIGHT)){
-        movement.x -= 1;
-    }
-    if(IsKeyPressed(KEY_LEFT)){
-        movement.x -= 1;
-    }else if (IsKeyReleased(KEY_LEFT)){
-        movement.x += 1;
+        break;
     }
 }
 
 void Player::Update(){
-    Move();  
-    if(!isGrounded){
-        movement.y += 0.2;
-    } else {
-		doubleJump = true;
-	}
+    switch(state){
+        case PlayerStates::Dead:
+        {
+            if(freezeFrames < 0){
+                freezeFrames--;
+            }else{
+                state = PlayerStates::Idle;
+                setPosition(levelStartPos.x, levelStartPos.y);
+            }
+        }break;
+        default:
+            Move();  
+            if(!isGrounded){
+                movement.y += 0.2;
+            } else {
+                doubleJump = true;
+            }
+        break;
+    }
 }
 
 void Player::Draw(){
@@ -125,7 +155,7 @@ void Player::Draw(){
             if(frame > 2){
                 frame = 0;
             }
-            DrawTextureRec(textureHolder->getTexture(3), Rectangle{sourceRect.x, 128, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
+            DrawTextureRec(textureHolder->getTexture(3), Rectangle{sourceRect.x, 96, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
         }break;
         default:
         break;
@@ -139,18 +169,35 @@ void Player::Move(){
     rect.y += movement.y * vel * GetFrameTime();
 	verticalCollition();
 
-	/* if (rect.y + rect.height >= SCREENHEIGHT) { */
-	/* 	isGrounded = true; */
-	/* } */
+    Vector2 monitorPos = GetWindowPosition();
 
-    if(rect.y+rect.height >= TILESIZE * 10 
-            || rect.y < 0
-            || rect.x < 0
-            || rect.x + rect.width >= TILESIZE * 10){
-        /* printf("pum. muerto owo \n"); */
+    if(rect.x + rect.width < monitorPos.x
+            || rect.y + rect.height < monitorPos.y
+            || rect.x > monitorPos.x + SCREENWIDTH
+            || rect.y > monitorPos.y + SCREENHEIGHT){
+        if(colberDance){
+            colberDance = false;
+        }else{
+            state = PlayerStates::Dead;
+        }
+        printf("pum. muerto owo \n");
     }
 }
 
 Rectangle Player::getRect(){
     return rect;
 }
+
+Vector2 Player::getInit(){
+    return levelStartPos;
+}
+
+bool Player::isDead(){
+    if(deadCheck){
+        if(state == PlayerStates::Dead){
+            return true;
+        }
+    }
+    return false;
+}
+

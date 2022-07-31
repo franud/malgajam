@@ -2,7 +2,7 @@
 #include "settings.h"
 
 enum class cameraState{
-    S1, S2, S3, S4
+    DEAD, S1, S2, S3, S4, S5
 };
 
 class CameraHolder{
@@ -13,6 +13,9 @@ private:
 
 public:
     CameraHolder();
+
     void update();
+    void resetCamera();
+
     Camera2D getCamera();
 };

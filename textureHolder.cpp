@@ -25,5 +25,5 @@ void TextureHolder::loadTextures(){
     addTexture(0, "resources/sprites/tiles/bkg0.png");
     addTexture(1, "resources/sprites/tiles/bkg1.png");
     addTexture(2, "resources/sprites/tiles/block.png");
-    addTexture(3, "resources/sprites/player/player.png");
+    addTexture(3, "resources/sprites/player/anim.png");
 }

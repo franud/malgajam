@@ -13,6 +13,8 @@
 enum class PlayerStates {
 	Idle,
     Run,
+    Dead,
+
     JumpStart,
     JumpUp,
     FallDown,
@@ -31,9 +33,16 @@ private:
 	/* movement related stuff */
     Vector2 movement{};
     int vel;
+    bool isFirst = true;
+    Vector2 levelStartPos;
+
+    //
+    bool deadCheck = true;
+    bool colberDance = true;
 
     // Draw
     TextureHolder *textureHolder = TextureHolder::getInstance();
+    int freezeFrames;
 
     float frame;
 
@@ -59,5 +68,9 @@ public:
     void Draw();
 
     Rectangle getRect();
+
+    bool isDead();
+
+    Vector2 getInit();
 };
 #endif
