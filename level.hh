@@ -6,12 +6,14 @@
 #include "tile.hh"
 #include "csvParser.hh"
 #include "player.h"
+#include "cameraHolder.hh"
 
 class Level{
 private:
     std::vector<Tile> tiles;
     Player player;
-    Camera2D camera{Vector2{0,0}, Vector2{0,0}, 0, 1.0f};
+    CameraHolder cameraHolder;
+    /* Camera2D camera{Vector2{0,0}, Vector2{0,0}, 0, 1.0f}; */
 
 public:
     Level();

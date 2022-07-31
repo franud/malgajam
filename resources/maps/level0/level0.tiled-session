@@ -1,0 +1,22 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+    },
+    "last.exportedFilePath": "/home/junk/code/cpp/raylib/malgajam/resources/maps/level0",
+    "last.imagePath": "/home/junk/code/cpp/raylib/malgajam/resources/maps/level0",
+    "map.height": 33,
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.width": 60,
+    "openFiles": [
+    ],
+    "project": "level0.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

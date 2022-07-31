@@ -7,7 +7,7 @@ Player::Player(){
 	isGrounded = false;
     isWalled = false;
 	doubleJump = false;
-    rect = Rectangle{0, 0, 32, 32};
+    rect = Rectangle{0, 0, 96, 96};
     sourceRect = Rectangle{0, 0, rect.width, rect.height};
 
 	/* movement related stuff */
@@ -33,33 +33,33 @@ void Player::setScenario(std::vector<Tile> s){
 
 void Player::horizontalCollition () {
 	for (Tile t : scenario) {
-		if (CheckCollisionRecs(rect, t.getRect())) {
-            if (movement.x < 0) {
-				rect.x = t.getRect().x + t.getRect().width;
-                movement.y = 0;
-                isWalled = true;
-			}		
-			if (movement.x > 0) {
-				rect.x = t.getRect().x - rect.width;
-                movement.y = 0;
-                isWalled = true;
+        if(t.getIsCol()){
+            if (CheckCollisionRecs(rect, t.getRect())) {
+                if (movement.x < 0) {
+                    rect.x = t.getRect().x + t.getRect().width;
+                }		
+                if (movement.x > 0) {
+                    rect.x = t.getRect().x - rect.width;
+                }
             }
-		}
+        }
 	}
 }
 
 void Player::verticalCollition () {
 	for (Tile t : scenario) {
-		if (CheckCollisionRecs(this->rect, t.getRect())) {
-			if (movement.y < 0) {
-				movement.y = 0;
-				rect.y = t.getRect().y + t.getRect().height;
-			}
-			if (movement.y > 0) {
-				isGrounded = true; // is grounded in top of the tile
-				rect.y = t.getRect().y - this->rect.height;
-			}
-		}
+        if(t.getIsCol()){
+            if (CheckCollisionRecs(this->rect, t.getRect())) {
+                if (movement.y < 0) {
+                    movement.y = 0;
+                    rect.y = t.getRect().y + t.getRect().height;
+                }
+                if (movement.y > 0) {
+                    isGrounded = true; // is grounded in top of the tile
+                    rect.y = t.getRect().y - this->rect.height;
+                }
+            }
+        }
 	}
 }
 
@@ -117,7 +117,7 @@ void Player::Draw(){
             if(frame > 3){
                 frame = 0;
             }
-            DrawTextureRec(textureHolder->getTexture(1), Rectangle{sourceRect.x, 0, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
+            DrawTextureRec(textureHolder->getTexture(3), Rectangle{sourceRect.x, 0, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
         }break;
         case PlayerStates::Run:
         {
@@ -125,7 +125,7 @@ void Player::Draw(){
             if(frame > 2){
                 frame = 0;
             }
-            DrawTextureRec(textureHolder->getTexture(1), Rectangle{sourceRect.x, 128, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
+            DrawTextureRec(textureHolder->getTexture(3), Rectangle{sourceRect.x, 128, sourceRect.width, sourceRect.height}, Vector2{rect.x, rect.y}, WHITE);
         }break;
         default:
         break;
@@ -147,7 +147,7 @@ void Player::Move(){
             || rect.y < 0
             || rect.x < 0
             || rect.x + rect.width >= TILESIZE * 10){
-        printf("pum. muerto owo \n");
+        /* printf("pum. muerto owo \n"); */
     }
 }
 

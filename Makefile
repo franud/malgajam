@@ -1,8 +1,8 @@
-OBJS = main.cpp game.cpp settings.cpp player.cpp level.cc csvParser.cc tile.cc textureHolder.cpp
+OBJS = main.cpp game.cpp settings.cpp player.cpp level.cc csvParser.cc tile.cc textureHolder.cpp cameraHolder.cc
 
 CC = g++
 
-COMPILER_FLAGS = -w -g
+COMPILER_FLAGS = -w
 
 LINKER_FLAGS = -lraylib
 

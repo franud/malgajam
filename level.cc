@@ -4,7 +4,7 @@ Level::Level(){
 }
 
 void Level::loadLevel(){
-    std::ifstream file("tilemap.csv");
+    std::ifstream file("resources/maps/level0/level0CSV.csv");
 
     CSVRow row;
     int i = 0;
@@ -13,14 +13,28 @@ void Level::loadLevel(){
     while(file >> row)
     {
         for(int j = 0; j < row.size(); j++){
-            if(row[j] == "0"){
+            if(row[j] == "1"){
 
                 Rectangle rect{j * TILESIZE, i * TILESIZE, TILESIZE, TILESIZE};
-                Tile tile(rect);
+                Tile tile(rect, false, 0);
                 
                 tiles.push_back(tile);
             }
-            if(row[j] == "1"){
+            if(row[j] == "2"){
+
+                Rectangle rect{j * TILESIZE, i * TILESIZE, TILESIZE, TILESIZE};
+                Tile tile(rect, false, 1);
+                
+                tiles.push_back(tile);
+            }
+            if(row[j] == "2"){
+
+                Rectangle rect{j * TILESIZE, i * TILESIZE, TILESIZE, TILESIZE};
+                Tile tile(rect, true, 2);
+                
+                tiles.push_back(tile);
+            }
+            if(row[j] == "3"){
                 player.setPosition(j * TILESIZE, i * TILESIZE); 
             }
         }
@@ -36,8 +50,7 @@ void Level::processEvents(){
 
 void Level::update(){
     player.Update();
-    camera.offset.x -= 0;
-    SetWindowPosition(-camera.offset.x, 0);
+    cameraHolder.update();
 }
 
 void Level::draw(){
@@ -48,5 +61,5 @@ void Level::draw(){
 }
 
 Camera2D Level::getCamera(){
-    return camera;
+    return cameraHolder.getCamera();
 }
