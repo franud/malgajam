@@ -5,6 +5,7 @@
 Player::Player(){
 	state = PlayerStates::Idle;	
 	isGrounded = false;
+    isWalled = false;
 	doubleJump = false;
     rect = Rectangle{0, 0, 32, 32};
     sourceRect = Rectangle{0, 0, rect.width, rect.height};
@@ -36,12 +37,12 @@ void Player::horizontalCollition () {
             if (movement.x < 0) {
 				rect.x = t.getRect().x + t.getRect().width;
                 movement.y = 0;
-                isGrounded = true;
+                isWalled = true;
 			}		
 			if (movement.x > 0) {
 				rect.x = t.getRect().x - rect.width;
                 movement.y = 0;
-                isGrounded = true;
+                isWalled = true;
             }
 		}
 	}
@@ -67,15 +68,20 @@ void Player::HandleInput(){
 		if (isGrounded) {
 			movement.y = -3;
 			isGrounded = false;
+            isWalled = false;
         } else if (doubleJump) {
 			movement.y = -3;
 			doubleJump = false;
-        } 
+            isWalled = false;
+        } else if (isWalled) {
+            movement.y = -3;
+            isWalled = false;
+        }
 	}
 
     if(IsKeyPressed(KEY_RIGHT)){
         movement.x += 1;
-	}else if (IsKeyReleased(KEY_RIGHT)){
+	} else if (IsKeyReleased(KEY_RIGHT)){
         movement.x -= 1;
     }
     if(IsKeyPressed(KEY_LEFT)){

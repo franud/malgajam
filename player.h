@@ -21,6 +21,7 @@ enum class PlayerStates {
 class Player{
 private:
 	bool isGrounded;
+    bool isWalled;
 	bool doubleJump;
 	PlayerStates state;
     Rectangle rect;
